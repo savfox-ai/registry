@@ -7,7 +7,7 @@ emoji       = "🔔"
 
 # ─── Authorship & Legal ────────────────────────────────────
 author  = "_"
-license = "MIT"
+license = "Apache-2.0"
 
 # ─── Discovery ─────────────────────────────────────────────
 keywords   = ["test", "echo", "debug", "hello-world"]
