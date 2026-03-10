@@ -1,0 +1,31 @@
+# ─── Identity ───────────────────────────────────────────────
+slug        = "math-eval"
+name        = "Math Eval"
+description = "Evaluate math expressions using shell arithmetic and Python."
+version     = "1.0.0"
+emoji       = "🧮"
+
+# ─── Authorship & Legal ────────────────────────────────────
+author  = "_"
+license = "MIT"
+
+# ─── Discovery ─────────────────────────────────────────────
+keywords   = ["math", "calculator", "arithmetic", "python"]
+categories = ["utilities"]
+
+# ─── System Requirements ───────────────────────────────────
+[requires]
+bins = ["python3"]
+env  = []
+
+# ─── Dependency Installation ──────────────────────────────
+[[install]]
+id      = "brew"
+kind    = "brew"
+formula = "python@3"
+bins    = ["python3"]
+label   = "Homebrew"
+
+# ─── External Links ───────────────────────────────────────
+[links]
+repository = "https://github.com/savfox-ai/registry"

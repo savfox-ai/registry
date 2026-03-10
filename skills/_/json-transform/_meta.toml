@@ -1,0 +1,45 @@
+# ─── Identity ───────────────────────────────────────────────
+slug        = "json-transform"
+name        = "JSON Transform"
+description = "Transform and query JSON data using jq and Python."
+version     = "1.0.0"
+emoji       = "🔄"
+
+# ─── Authorship & Legal ────────────────────────────────────
+author  = "_"
+license = "MIT"
+
+# ─── Discovery ─────────────────────────────────────────────
+keywords   = ["json", "jq", "transform", "query", "filter", "data"]
+categories = ["data-processing", "utilities"]
+
+# ─── System Requirements ───────────────────────────────────
+[requires]
+bins = ["jq"]
+env  = []
+
+# ─── Dependency Installation ──────────────────────────────
+[[install]]
+id      = "brew"
+kind    = "brew"
+formula = "jq"
+bins    = ["jq"]
+label   = "Homebrew"
+
+[[install]]
+id      = "apt"
+kind    = "apt"
+package = "jq"
+bins    = ["jq"]
+label   = "APT"
+
+[[install]]
+id      = "choco"
+kind    = "choco"
+package = "jq"
+bins    = ["jq"]
+label   = "Chocolatey"
+
+# ─── External Links ───────────────────────────────────────
+[links]
+repository = "https://github.com/savfox-ai/registry"

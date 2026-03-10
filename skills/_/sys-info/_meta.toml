@@ -1,0 +1,23 @@
+# ─── Identity ───────────────────────────────────────────────
+slug        = "sys-info"
+name        = "Sys Info"
+description = "Retrieve system information including OS, CPU, memory, and disk usage."
+version     = "1.0.0"
+emoji       = "💻"
+
+# ─── Authorship & Legal ────────────────────────────────────
+author  = "_"
+license = "MIT"
+
+# ─── Discovery ─────────────────────────────────────────────
+keywords   = ["system", "diagnostics", "cpu", "memory", "disk", "os"]
+categories = ["utilities", "diagnostics"]
+
+# ─── System Requirements ───────────────────────────────────
+[requires]
+bins = []
+env  = []
+
+# ─── External Links ───────────────────────────────────────
+[links]
+repository = "https://github.com/savfox-ai/registry"

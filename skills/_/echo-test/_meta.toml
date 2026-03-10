@@ -1,0 +1,23 @@
+# ─── Identity ───────────────────────────────────────────────
+slug        = "echo-test"
+name        = "Echo Test"
+description = "Simple echo skill for testing skill loading and execution."
+version     = "1.0.0"
+emoji       = "🔔"
+
+# ─── Authorship & Legal ────────────────────────────────────
+author  = "_"
+license = "MIT"
+
+# ─── Discovery ─────────────────────────────────────────────
+keywords   = ["test", "echo", "debug", "hello-world"]
+categories = ["testing"]
+
+# ─── System Requirements ───────────────────────────────────
+[requires]
+bins = []
+env  = []
+
+# ─── External Links ───────────────────────────────────────
+[links]
+repository = "https://github.com/savfox-ai/registry"

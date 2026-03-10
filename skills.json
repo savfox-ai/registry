@@ -1,0 +1,27 @@
+[
+  {
+    "id": "_/echo-test",
+    "slug": "echo-test",
+    "name": "Echo Test"
+  },
+  {
+    "id": "_/math-eval",
+    "slug": "math-eval",
+    "name": "Math Eval"
+  },
+  {
+    "id": "_/file-gen",
+    "slug": "file-gen",
+    "name": "File Gen"
+  },
+  {
+    "id": "_/sys-info",
+    "slug": "sys-info",
+    "name": "Sys Info"
+  },
+  {
+    "id": "_/json-transform",
+    "slug": "json-transform",
+    "name": "JSON Transform"
+  }
+]

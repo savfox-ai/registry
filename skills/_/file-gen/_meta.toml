@@ -1,0 +1,23 @@
+# ─── Identity ───────────────────────────────────────────────
+slug        = "file-gen"
+name        = "File Gen"
+description = "Generate test files and sample data for development and testing."
+version     = "1.0.0"
+emoji       = "📝"
+
+# ─── Authorship & Legal ────────────────────────────────────
+author  = "_"
+license = "MIT"
+
+# ─── Discovery ─────────────────────────────────────────────
+keywords   = ["file", "generate", "test-data", "json", "csv", "yaml", "toml"]
+categories = ["testing", "utilities"]
+
+# ─── System Requirements ───────────────────────────────────
+[requires]
+bins = []
+env  = []
+
+# ─── External Links ───────────────────────────────────────
+[links]
+repository = "https://github.com/savfox-ai/registry"
