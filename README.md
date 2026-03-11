@@ -4,66 +4,36 @@ The official registry for distributing and discovering [Savfox](https://github.c
 
 ## Structure
 
-```
-skills.json              # Global skill index
+```text
+skills.json              # Registry index
+docs/
+  metadata-format.md     # Detailed _meta.toml and index documentation
 skills/
-  {user}/                # User/org namespace
-    {skill-slug}/        # One directory per skill
-      _meta.toml         # Skill metadata
-      SKILL.md           # Skill instructions (consumed by AI agents)
+  {namespace}/
+    {skill-slug}/
+      _meta.toml         # Canonical bundle metadata
+      SKILL.md           # Main skill entry file
+      ...                # Optional bundled assets/templates/scripts
 ```
 
-## `_meta.toml` Format
+## Metadata
 
-Each skill directory contains a `_meta.toml` with the following sections:
+`_meta.toml` now uses a versioned schema with explicit sections for:
 
-```toml
-# Identity
-slug        = "my-skill"
-name        = "My Skill"
-description = "What this skill does."
-version     = "1.0.0"
-emoji       = "🔧"
+- package identity
+- authorship
+- discovery metadata
+- source location
+- runtime requirements
+- links
 
-# Authorship & Legal
-author  = "username"
-license = "Apache-2.0"
+The source section supports both bundled skills and external git repositories, including a git ref (`branch`, `tag`, or `commit`) and a `subdir` for skills that live below the repository root.
 
-# Discovery
-keywords   = ["keyword1", "keyword2"]
-categories = ["category"]
+See [docs/metadata-format.md](docs/metadata-format.md) for the full schema, validation rules, and examples.
 
-# System Requirements
-[requires]
-bins = ["curl"]          # Required executables on $PATH
-env  = ["API_KEY"]       # Required environment variables
+## Index
 
-# Dependency Installation Methods
-[[install]]
-id      = "brew"
-kind    = "brew"
-formula = "curl"
-bins    = ["curl"]
-label   = "Homebrew"
-
-# External Links
-[links]
-repository = "https://github.com/..."
-```
-
-## `skills.json` Format
-
-The top-level index lists all registered skills:
-
-```json
-[
-  {
-    "id": "user/skill-slug",
-    "slug": "skill-slug",
-    "name": "Friendly Name"
-  }
-]
-```
+`skills.json` is also versioned now. Each entry includes the registry path plus a source summary so clients do not need to infer where the skill actually lives.
 
 ## License
 

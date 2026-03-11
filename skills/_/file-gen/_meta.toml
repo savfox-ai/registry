@@ -1,23 +1,28 @@
-# ─── Identity ───────────────────────────────────────────────
-slug        = "file-gen"
-name        = "File Gen"
+schema_version = 2
+
+[package]
+kind = "skill"
+slug = "file-gen"
+name = "File Gen"
 description = "Generate test files and sample data for development and testing."
-version     = "1.0.0"
-emoji       = "📝"
-
-# ─── Authorship & Legal ────────────────────────────────────
-author  = "_"
+version = "1.0.0"
 license = "Apache-2.0"
+icon = "📝"
 
-# ─── Discovery ─────────────────────────────────────────────
-keywords   = ["file", "generate", "test-data", "json", "csv", "yaml", "toml"]
+[author]
+name = "_"
+
+[discovery]
+keywords = ["file", "generate", "test-data", "json", "csv", "yaml", "toml"]
 categories = ["testing", "utilities"]
 
-# ─── System Requirements ───────────────────────────────────
-[requires]
-bins = []
-env  = []
+[source]
+kind = "bundle"
+subdir = "."
 
-# ─── External Links ───────────────────────────────────────
+[runtime]
+bins = []
+env = []
+
 [links]
 repository = "https://github.com/savfox-ai/registry"

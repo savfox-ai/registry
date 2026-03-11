@@ -1,23 +1,28 @@
-# ─── Identity ───────────────────────────────────────────────
-slug        = "sys-info"
-name        = "Sys Info"
+schema_version = 2
+
+[package]
+kind = "skill"
+slug = "sys-info"
+name = "Sys Info"
 description = "Retrieve system information including OS, CPU, memory, and disk usage."
-version     = "1.0.0"
-emoji       = "💻"
-
-# ─── Authorship & Legal ────────────────────────────────────
-author  = "_"
+version = "1.0.0"
 license = "Apache-2.0"
+icon = "💻"
 
-# ─── Discovery ─────────────────────────────────────────────
-keywords   = ["system", "diagnostics", "cpu", "memory", "disk", "os"]
+[author]
+name = "_"
+
+[discovery]
+keywords = ["system", "diagnostics", "cpu", "memory", "disk", "os"]
 categories = ["utilities", "diagnostics"]
 
-# ─── System Requirements ───────────────────────────────────
-[requires]
-bins = []
-env  = []
+[source]
+kind = "bundle"
+subdir = "."
 
-# ─── External Links ───────────────────────────────────────
+[runtime]
+bins = []
+env = []
+
 [links]
 repository = "https://github.com/savfox-ai/registry"

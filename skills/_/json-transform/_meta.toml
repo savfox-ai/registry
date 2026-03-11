@@ -1,45 +1,49 @@
-# ─── Identity ───────────────────────────────────────────────
-slug        = "json-transform"
-name        = "JSON Transform"
+schema_version = 2
+
+[package]
+kind = "skill"
+slug = "json-transform"
+name = "JSON Transform"
 description = "Transform and query JSON data using jq and Python."
-version     = "1.0.0"
-emoji       = "🔄"
-
-# ─── Authorship & Legal ────────────────────────────────────
-author  = "_"
+version = "1.0.0"
 license = "Apache-2.0"
+icon = "🔄"
 
-# ─── Discovery ─────────────────────────────────────────────
-keywords   = ["json", "jq", "transform", "query", "filter", "data"]
+[author]
+name = "_"
+
+[discovery]
+keywords = ["json", "jq", "transform", "query", "filter", "data"]
 categories = ["data-processing", "utilities"]
 
-# ─── System Requirements ───────────────────────────────────
-[requires]
+[source]
+kind = "bundle"
+subdir = "."
+
+[runtime]
 bins = ["jq"]
-env  = []
+env = []
 
-# ─── Dependency Installation ──────────────────────────────
-[[install]]
-id      = "brew"
-kind    = "brew"
-formula = "jq"
-bins    = ["jq"]
-label   = "Homebrew"
-
-[[install]]
-id      = "apt"
-kind    = "apt"
+[[runtime.install]]
+id = "brew"
+kind = "brew"
 package = "jq"
-bins    = ["jq"]
-label   = "APT"
+bins = ["jq"]
+label = "Homebrew"
 
-[[install]]
-id      = "choco"
-kind    = "choco"
+[[runtime.install]]
+id = "apt"
+kind = "apt"
 package = "jq"
-bins    = ["jq"]
-label   = "Chocolatey"
+bins = ["jq"]
+label = "APT"
 
-# ─── External Links ───────────────────────────────────────
+[[runtime.install]]
+id = "choco"
+kind = "choco"
+package = "jq"
+bins = ["jq"]
+label = "Chocolatey"
+
 [links]
 repository = "https://github.com/savfox-ai/registry"

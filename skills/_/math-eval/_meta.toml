@@ -1,31 +1,35 @@
-# ─── Identity ───────────────────────────────────────────────
-slug        = "math-eval"
-name        = "Math Eval"
+schema_version = 2
+
+[package]
+kind = "skill"
+slug = "math-eval"
+name = "Math Eval"
 description = "Evaluate math expressions using shell arithmetic and Python."
-version     = "1.0.0"
-emoji       = "🧮"
-
-# ─── Authorship & Legal ────────────────────────────────────
-author  = "_"
+version = "1.0.0"
 license = "Apache-2.0"
+icon = "🧮"
 
-# ─── Discovery ─────────────────────────────────────────────
-keywords   = ["math", "calculator", "arithmetic", "python"]
+[author]
+name = "_"
+
+[discovery]
+keywords = ["math", "calculator", "arithmetic", "python"]
 categories = ["utilities"]
 
-# ─── System Requirements ───────────────────────────────────
-[requires]
+[source]
+kind = "bundle"
+subdir = "."
+
+[runtime]
 bins = ["python3"]
-env  = []
+env = []
 
-# ─── Dependency Installation ──────────────────────────────
-[[install]]
-id      = "brew"
-kind    = "brew"
-formula = "python@3"
-bins    = ["python3"]
-label   = "Homebrew"
+[[runtime.install]]
+id = "brew"
+kind = "brew"
+package = "python@3"
+bins = ["python3"]
+label = "Homebrew"
 
-# ─── External Links ───────────────────────────────────────
 [links]
 repository = "https://github.com/savfox-ai/registry"

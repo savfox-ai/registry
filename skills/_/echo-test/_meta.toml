@@ -1,23 +1,28 @@
-# ─── Identity ───────────────────────────────────────────────
-slug        = "echo-test"
-name        = "Echo Test"
+schema_version = 2
+
+[package]
+kind = "skill"
+slug = "echo-test"
+name = "Echo Test"
 description = "Simple echo skill for testing skill loading and execution."
-version     = "1.0.0"
-emoji       = "🔔"
-
-# ─── Authorship & Legal ────────────────────────────────────
-author  = "_"
+version = "1.0.0"
 license = "Apache-2.0"
+icon = "🔔"
 
-# ─── Discovery ─────────────────────────────────────────────
-keywords   = ["test", "echo", "debug", "hello-world"]
+[author]
+name = "_"
+
+[discovery]
+keywords = ["test", "echo", "debug", "hello-world"]
 categories = ["testing"]
 
-# ─── System Requirements ───────────────────────────────────
-[requires]
-bins = []
-env  = []
+[source]
+kind = "bundle"
+subdir = "."
 
-# ─── External Links ───────────────────────────────────────
+[runtime]
+bins = []
+env = []
+
 [links]
 repository = "https://github.com/savfox-ai/registry"
