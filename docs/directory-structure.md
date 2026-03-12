@@ -68,7 +68,7 @@ Expected contents:
 Use the three metadata files for distinct concerns:
 
 - `realm.json`
-  Publisher identity and defaults.
+  Publisher identity and policies.
 - `flock.json`
   Release metadata for one curated collection.
 - `skills.json`

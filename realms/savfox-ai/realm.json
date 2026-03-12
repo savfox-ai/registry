@@ -1,11 +1,8 @@
 {
-  "$schema": "../../schemas/realm.schema.json",
-  "schema_version": 1,
   "id": "_",
   "name": "Example Realm",
   "tagline": "Reference namespace for local testing and documentation.",
   "description": "A sample realm that demonstrates how registry owners can describe their namespace, maintainers, discovery metadata, and default publishing policies.",
-  "website": "https://example.com",
   "visibility": "public",
   "verified": false,
   "maintainers": [
@@ -40,16 +37,6 @@
     "email": "hello@example.com",
     "security_email": "security@example.com",
     "discussions": "https://example.com/community"
-  },
-  "defaults": {
-    "license": "MIT OR Apache-2.0",
-    "visibility": "public",
-    "compatibility": {
-      "savfox": ">=0.1.0",
-      "platforms": [
-        "any"
-      ]
-    }
   },
   "policies": {
     "submission_url": "https://example.com/submit",

@@ -72,7 +72,6 @@ The recommended identifier relationship is:
 | `id` | string | Realm identifier. Allows `_` or a lowercase slug. |
 | `name` | string | Display name. |
 | `description` | string | Human-readable namespace description. |
-| `website` | string | Canonical website URL. |
 | `maintainers` | array | At least one maintainer. |
 
 ### Recommended fields
@@ -85,7 +84,6 @@ The recommended identifier relationship is:
 | `branding` | object | Icon, accent color, optional banner/logo URLs. |
 | `discovery` | object | Categories, keywords, and tags. |
 | `contacts` | object | Public, security, and discussion contacts. |
-| `defaults` | object | Default license, visibility, and compatibility guidance. |
 | `policies` | object | Submission, security, and code-of-conduct URLs. |
 | `links` | object | Docs, homepage, issue tracker, and related URLs. |
 

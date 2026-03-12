@@ -1,7 +1,4 @@
 {
-  "$schema": "../../../../schemas/skills.schema.json",
-  "schema_version": 1,
-  "realm_id": "_",
   "flock_slug": "flock_name",
   "generated_at": "2026-03-12T00:00:00Z",
   "items": [

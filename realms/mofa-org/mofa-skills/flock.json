@@ -1,7 +1,4 @@
 {
-  "$schema": "../../../../schemas/flock.schema.json",
-  "schema_version": 1,
-  "realm_id": "_",
   "slug": "flock_name",
   "name": "Example Flock",
   "description": "A curated flock of API, web, and async development skills.",

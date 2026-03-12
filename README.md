@@ -34,7 +34,7 @@ The current model is organized around three layers:
 ## Metadata Files
 
 - `realms/{realm-id}/realm.json`
-  Defines namespace ownership, branding, discovery metadata, contacts, and defaults.
+  Defines namespace ownership, branding, discovery metadata, and contacts.
 - `realms/{realm-id}/flocks/{flock-slug}/flock.json`
   Defines one flock's identity, lifecycle status, source repository, compatibility, and index location.
 - `realms/{realm-id}/flocks/{flock-slug}/skills.json`

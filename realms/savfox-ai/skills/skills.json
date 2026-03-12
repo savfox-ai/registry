@@ -1,0 +1,71 @@
+{
+  "flock_slug": "flock_name",
+  "generated_at": "2026-03-12T00:00:00Z",
+  "items": [
+    {
+      "id": "_/flock_name/python",
+      "slug": "python",
+      "name": "Python",
+      "summary": "Python tooling, packaging, and runtime guidance for Savfox agents.",
+      "description": "Provides Python language conventions, dependency management practices, virtual environment workflows, and runtime assumptions for agent tasks.",
+      "version": "1.0.0",
+      "status": "active",
+      "license": "PSF-2.0",
+      "categories": [
+        "language",
+        "tooling"
+      ],
+      "keywords": [
+        "python",
+        "pip",
+        "venv",
+        "packaging"
+      ],
+      "maintainers": [
+        {
+          "id": "registry-team",
+          "name": "Registry Team",
+          "role": "maintainer",
+          "email": "registry@example.com"
+        }
+      ],
+      "entry": {
+        "format": "markdown",
+        "path": "SKILL.md"
+      },
+      "source": {
+        "kind": "git",
+        "url": "https://github.com/example/python-skill.git",
+        "ref": {
+          "type": "tag",
+          "value": "v1.0.0"
+        },
+        "subdir": "."
+      },
+      "compatibility": {
+        "savfox": ">=0.1.0",
+        "platforms": [
+          "windows",
+          "linux",
+          "macos"
+        ]
+      },
+      "runtime": {
+        "bins": [
+          "python",
+          "pip"
+        ],
+        "env": [
+          "PYTHONUTF8"
+        ],
+        "network": false,
+        "sandbox": "preferred"
+      },
+      "links": {
+        "homepage": "https://example.com/skills/python",
+        "docs": "https://example.com/skills/python/docs",
+        "repository": "https://github.com/example/python-skill"
+      }
+    }
+  ]
+}
