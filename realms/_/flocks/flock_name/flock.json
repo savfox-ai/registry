@@ -1,0 +1,22 @@
+{
+    "slug": "flock_name",
+    "name": "flock name",
+    "description": "A description of the flock.",
+    "version": "1.0.0",
+    "repository": {
+        "git": "",
+        "rev": ""
+    },
+    "categories": [
+        "api-bindings",
+        "web-programming",
+        "asynchronous"
+    ],
+    "keywords": [
+        "openai",
+        "async",
+        "openapi",
+        "ai"
+    ],
+    "license": "MIT OR Apache-2.0"
+}
