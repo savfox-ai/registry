@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://registry.savfox.ai/schemas/skills.schema.json",
+  "title": "Savfox Flock Skill Index",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "realm_id": {
+      "$ref": "common.schema.json#/$defs/realmId"
+    },
+    "flock_slug": {
+      "$ref": "common.schema.json#/$defs/slug"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/skillItem"
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "realm_id",
+    "flock_slug",
+    "items"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "skillItem": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^(_|[a-z0-9][a-z0-9_-]*)/[a-z0-9][a-z0-9_-]*/[a-z0-9][a-z0-9_-]*$"
+        },
+        "slug": {
+          "$ref": "common.schema.json#/$defs/slug"
+        },
+        "name": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "summary": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "description": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "version": {
+          "$ref": "common.schema.json#/$defs/semver"
+        },
+        "status": {
+          "$ref": "common.schema.json#/$defs/status"
+        },
+        "license": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "categories": {
+          "$ref": "common.schema.json#/$defs/categories"
+        },
+        "keywords": {
+          "$ref": "common.schema.json#/$defs/keywords"
+        },
+        "maintainers": {
+          "$ref": "common.schema.json#/$defs/maintainers"
+        },
+        "entry": {
+          "$ref": "common.schema.json#/$defs/entry"
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/source"
+        },
+        "compatibility": {
+          "$ref": "common.schema.json#/$defs/compatibility"
+        },
+        "runtime": {
+          "$ref": "common.schema.json#/$defs/runtime"
+        },
+        "links": {
+          "$ref": "common.schema.json#/$defs/links"
+        }
+      },
+      "required": [
+        "id",
+        "slug",
+        "name",
+        "summary",
+        "version",
+        "status",
+        "license",
+        "source"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://registry.savfox.ai/schemas/flock.schema.json",
+  "title": "Savfox Flock Metadata",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "realm_id": {
+      "$ref": "common.schema.json#/$defs/realmId"
+    },
+    "slug": {
+      "$ref": "common.schema.json#/$defs/slug"
+    },
+    "name": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "description": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "version": {
+      "$ref": "common.schema.json#/$defs/semver"
+    },
+    "status": {
+      "$ref": "common.schema.json#/$defs/status"
+    },
+    "visibility": {
+      "$ref": "common.schema.json#/$defs/visibility"
+    },
+    "license": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "categories": {
+      "$ref": "common.schema.json#/$defs/categories"
+    },
+    "keywords": {
+      "$ref": "common.schema.json#/$defs/keywords"
+    },
+    "maintainers": {
+      "$ref": "common.schema.json#/$defs/maintainers"
+    },
+    "branding": {
+      "$ref": "common.schema.json#/$defs/branding"
+    },
+    "source": {
+      "$ref": "common.schema.json#/$defs/source"
+    },
+    "index": {
+      "type": "object",
+      "properties": {
+        "skills_path": {
+          "$ref": "common.schema.json#/$defs/relativePath"
+        },
+        "readme_path": {
+          "$ref": "common.schema.json#/$defs/relativePath"
+        }
+      },
+      "required": [
+        "skills_path"
+      ],
+      "additionalProperties": false
+    },
+    "compatibility": {
+      "$ref": "common.schema.json#/$defs/compatibility"
+    },
+    "featured_skills": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/slug"
+      },
+      "uniqueItems": true
+    },
+    "links": {
+      "$ref": "common.schema.json#/$defs/links"
+    }
+  },
+  "required": [
+    "schema_version",
+    "realm_id",
+    "slug",
+    "name",
+    "description",
+    "version",
+    "status",
+    "license",
+    "maintainers",
+    "source",
+    "index"
+  ],
+  "additionalProperties": false
+}

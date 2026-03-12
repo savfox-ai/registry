@@ -1,0 +1,93 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://registry.savfox.ai/schemas/realm.schema.json",
+  "title": "Savfox Realm Metadata",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/realmId"
+    },
+    "name": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "tagline": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "description": {
+      "$ref": "common.schema.json#/$defs/nonEmptyString"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri"
+    },
+    "visibility": {
+      "$ref": "common.schema.json#/$defs/visibility"
+    },
+    "verified": {
+      "type": "boolean"
+    },
+    "maintainers": {
+      "$ref": "common.schema.json#/$defs/maintainers"
+    },
+    "branding": {
+      "$ref": "common.schema.json#/$defs/branding"
+    },
+    "discovery": {
+      "$ref": "common.schema.json#/$defs/discovery"
+    },
+    "contacts": {
+      "$ref": "common.schema.json#/$defs/contacts"
+    },
+    "defaults": {
+      "type": "object",
+      "properties": {
+        "license": {
+          "$ref": "common.schema.json#/$defs/nonEmptyString"
+        },
+        "visibility": {
+          "$ref": "common.schema.json#/$defs/visibility"
+        },
+        "compatibility": {
+          "$ref": "common.schema.json#/$defs/compatibility"
+        }
+      },
+      "additionalProperties": false
+    },
+    "policies": {
+      "type": "object",
+      "properties": {
+        "submission_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "security_url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "code_of_conduct_url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "links": {
+      "$ref": "common.schema.json#/$defs/links"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "name",
+    "description",
+    "website",
+    "maintainers"
+  ],
+  "additionalProperties": false
+}

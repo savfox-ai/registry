@@ -1,22 +1,59 @@
 {
-    "slug": "flock_name",
-    "name": "flock name",
-    "description": "A description of the flock.",
-    "version": "1.0.0",
-    "repository": {
-        "git": "",
-        "rev": ""
+  "$schema": "../../../../schemas/flock.schema.json",
+  "schema_version": 1,
+  "realm_id": "_",
+  "slug": "flock_name",
+  "name": "Example Flock",
+  "description": "A curated flock of API, web, and async development skills.",
+  "version": "1.0.0",
+  "status": "active",
+  "visibility": "public",
+  "license": "MIT OR Apache-2.0",
+  "categories": [
+    "api-bindings",
+    "web-programming",
+    "asynchronous"
+  ],
+  "keywords": [
+    "openai",
+    "async",
+    "openapi",
+    "ai"
+  ],
+  "maintainers": [
+    {
+      "id": "registry-team",
+      "name": "Registry Team",
+      "role": "owner",
+      "email": "registry@example.com"
+    }
+  ],
+  "source": {
+    "kind": "git",
+    "url": "https://github.com/example/flock-name.git",
+    "ref": {
+      "type": "branch",
+      "value": "main"
     },
-    "categories": [
-        "api-bindings",
-        "web-programming",
-        "asynchronous"
-    ],
-    "keywords": [
-        "openai",
-        "async",
-        "openapi",
-        "ai"
-    ],
-    "license": "MIT OR Apache-2.0"
+    "subdir": "."
+  },
+  "index": {
+    "skills_path": "skills.json"
+  },
+  "compatibility": {
+    "savfox": ">=0.1.0",
+    "platforms": [
+      "windows",
+      "linux",
+      "macos"
+    ]
+  },
+  "featured_skills": [
+    "python"
+  ],
+  "links": {
+    "homepage": "https://example.com/flocks/flock-name",
+    "repository": "https://github.com/example/flock-name",
+    "issues": "https://github.com/example/flock-name/issues"
+  }
 }

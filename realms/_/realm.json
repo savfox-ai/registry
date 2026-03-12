@@ -1,6 +1,64 @@
 {
-    "id": "_",
-    "name": "realm name",
-    "description": "A description of the realm.",
-    "website": "https://example.com"
+  "$schema": "../../schemas/realm.schema.json",
+  "schema_version": 1,
+  "id": "_",
+  "name": "Example Realm",
+  "tagline": "Reference namespace for local testing and documentation.",
+  "description": "A sample realm that demonstrates how registry owners can describe their namespace, maintainers, discovery metadata, and default publishing policies.",
+  "website": "https://example.com",
+  "visibility": "public",
+  "verified": false,
+  "maintainers": [
+    {
+      "id": "registry-team",
+      "name": "Registry Team",
+      "role": "maintainer",
+      "email": "registry@example.com",
+      "url": "https://example.com/team"
+    }
+  ],
+  "branding": {
+    "icon": "R",
+    "accent_color": "#2563EB"
+  },
+  "discovery": {
+    "categories": [
+      "examples",
+      "community"
+    ],
+    "keywords": [
+      "savfox",
+      "registry",
+      "reference"
+    ],
+    "tags": [
+      "starter",
+      "public"
+    ]
+  },
+  "contacts": {
+    "email": "hello@example.com",
+    "security_email": "security@example.com",
+    "discussions": "https://example.com/community"
+  },
+  "defaults": {
+    "license": "MIT OR Apache-2.0",
+    "visibility": "public",
+    "compatibility": {
+      "savfox": ">=0.1.0",
+      "platforms": [
+        "any"
+      ]
+    }
+  },
+  "policies": {
+    "submission_url": "https://example.com/submit",
+    "security_url": "https://example.com/security",
+    "code_of_conduct_url": "https://example.com/code-of-conduct"
+  },
+  "links": {
+    "homepage": "https://example.com",
+    "docs": "https://example.com/docs",
+    "issues": "https://example.com/support"
+  }
 }

@@ -1,39 +1,57 @@
-# Savfox AI Skill Registry
+# Savfox AI Registry
 
-The official registry for distributing and discovering [Savfox](https://github.com/savfox-ai/savfox) AI skills.
+This repository is a metadata registry for Savfox skills.
 
-## Structure
+The current model is organized around three layers:
+
+- `realm`: a publisher namespace or organization
+- `flock`: a curated distribution of skills inside a realm
+- `skills`: the index of individual skill records inside a flock
+
+## Repository Layout
 
 ```text
-skills.json              # Registry index
-docs/
-  metadata-format.md     # Detailed _meta.toml and index documentation
-skills/
-  {namespace}/
-    {skill-slug}/
-      _meta.toml         # Canonical bundle metadata
-      SKILL.md           # Main skill entry file
-      ...                # Optional bundled assets/templates/scripts
+.
+├── LICENSE
+├── README.md
+├── docs/
+│   ├── directory-structure.md
+│   └── metadata-format.md
+├── schemas/
+│   ├── common.schema.json
+│   ├── flock.schema.json
+│   ├── realm.schema.json
+│   └── skills.schema.json
+└── realms/
+    └── {realm-id}/
+        ├── realm.json
+        └── flocks/
+            └── {flock-slug}/
+                ├── flock.json
+                └── skills.json
 ```
 
-## Metadata
+## Metadata Files
 
-`_meta.toml` now uses a versioned schema with explicit sections for:
+- `realms/{realm-id}/realm.json`
+  Defines namespace ownership, branding, discovery metadata, contacts, and defaults.
+- `realms/{realm-id}/flocks/{flock-slug}/flock.json`
+  Defines one flock's identity, lifecycle status, source repository, compatibility, and index location.
+- `realms/{realm-id}/flocks/{flock-slug}/skills.json`
+  Defines the list of skills exposed by that flock.
 
-- package identity
-- authorship
-- discovery metadata
-- source location
-- runtime requirements
-- links
+## Schemas
 
-The source section supports both bundled skills and external git repositories, including a git ref (`branch`, `tag`, or `commit`) and a `subdir` for skills that live below the repository root.
+All sample metadata files include a `$schema` field and validate against Draft 2020-12 schemas in [`schemas/`](schemas).
 
-See [docs/metadata-format.md](docs/metadata-format.md) for the full schema, validation rules, and examples.
+- [`schemas/realm.schema.json`](schemas/realm.schema.json)
+- [`schemas/flock.schema.json`](schemas/flock.schema.json)
+- [`schemas/skills.schema.json`](schemas/skills.schema.json)
 
-## Index
+## Documentation
 
-`skills.json` is also versioned now. Each entry includes the registry path plus a source summary so clients do not need to infer where the skill actually lives.
+- [`docs/directory-structure.md`](docs/directory-structure.md)
+- [`docs/metadata-format.md`](docs/metadata-format.md)
 
 ## License
 

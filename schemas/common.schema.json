@@ -1,0 +1,334 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://registry.savfox.ai/schemas/common.schema.json",
+  "title": "Savfox Registry Common Types",
+  "$defs": {
+    "nonEmptyString": {
+      "type": "string",
+      "minLength": 1
+    },
+    "realmId": {
+      "type": "string",
+      "pattern": "^(_|[a-z0-9][a-z0-9-]*)$"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9_-]*$"
+    },
+    "semver": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    },
+    "relativePath": {
+      "type": "string",
+      "pattern": "^(\\.|(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+)$"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "draft",
+        "active",
+        "experimental",
+        "deprecated",
+        "archived"
+      ]
+    },
+    "visibility": {
+      "type": "string",
+      "enum": [
+        "public",
+        "unlisted",
+        "private"
+      ]
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/nonEmptyString"
+      },
+      "uniqueItems": true
+    },
+    "maintainer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[_a-z0-9][a-z0-9_-]*$"
+        },
+        "name": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "role": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
+    "maintainers": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/maintainer"
+      },
+      "minItems": 1
+    },
+    "links": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9_-]*$"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "format": "uri"
+      }
+    },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "icon": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "accent_color": {
+          "type": "string",
+          "pattern": "^#(?:[0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$"
+        },
+        "banner_image": {
+          "type": "string",
+          "format": "uri"
+        },
+        "light_logo": {
+          "type": "string",
+          "format": "uri"
+        },
+        "dark_logo": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "discovery": {
+      "type": "object",
+      "properties": {
+        "categories": {
+          "$ref": "#/$defs/categories"
+        },
+        "keywords": {
+          "$ref": "#/$defs/keywords"
+        },
+        "tags": {
+          "$ref": "#/$defs/tags"
+        }
+      },
+      "additionalProperties": false
+    },
+    "contacts": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "security_email": {
+          "type": "string",
+          "format": "email"
+        },
+        "discussions": {
+          "type": "string",
+          "format": "uri"
+        }
+      },
+      "additionalProperties": false
+    },
+    "gitRef": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "branch",
+            "tag",
+            "commit"
+          ]
+        },
+        "value": {
+          "$ref": "#/$defs/nonEmptyString"
+        }
+      },
+      "required": [
+        "type",
+        "value"
+      ],
+      "additionalProperties": false
+    },
+    "registrySource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "registry"
+        },
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        }
+      },
+      "required": [
+        "kind",
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "gitSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "const": "git"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        },
+        "ref": {
+          "$ref": "#/$defs/gitRef"
+        },
+        "subdir": {
+          "$ref": "#/$defs/relativePath"
+        }
+      },
+      "required": [
+        "kind",
+        "url",
+        "ref",
+        "subdir"
+      ],
+      "additionalProperties": false
+    },
+    "source": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/registrySource"
+        },
+        {
+          "$ref": "#/$defs/gitSource"
+        }
+      ]
+    },
+    "compatibility": {
+      "type": "object",
+      "properties": {
+        "savfox": {
+          "$ref": "#/$defs/nonEmptyString"
+        },
+        "platforms": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "any",
+              "windows",
+              "linux",
+              "macos",
+              "web"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "architectures": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "any",
+              "x64",
+              "arm64"
+            ]
+          },
+          "uniqueItems": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "runtime": {
+      "type": "object",
+      "properties": {
+        "bins": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/nonEmptyString"
+          },
+          "uniqueItems": true
+        },
+        "env": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]*$"
+          },
+          "uniqueItems": true
+        },
+        "network": {
+          "type": "boolean"
+        },
+        "sandbox": {
+          "type": "string",
+          "enum": [
+            "none",
+            "preferred",
+            "required"
+          ]
+        },
+        "memory_mb": {
+          "type": "integer",
+          "minimum": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "entry": {
+      "type": "object",
+      "properties": {
+        "format": {
+          "type": "string",
+          "enum": [
+            "markdown",
+            "json",
+            "yaml",
+            "toml"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/relativePath"
+        }
+      },
+      "required": [
+        "format",
+        "path"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

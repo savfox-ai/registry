@@ -1,278 +1,253 @@
 # Metadata Format
 
-This registry uses schema version `2` for both per-skill metadata (`_meta.toml`) and the top-level registry index (`skills.json`).
+This repository uses JSON metadata with schema version `1` for the current `realm -> flock -> skills` model.
 
-## Goals
+All metadata files can reference local schemas with the `$schema` property:
 
-- Make skill metadata explicit and versioned.
-- Support skills bundled directly in this registry.
-- Support skills whose canonical source lives in an external git repository.
-- Allow skills to live in a subdirectory instead of the git repository root.
-- Keep enough information in `skills.json` for simple clients to browse without scanning the whole tree.
+- `schemas/realm.schema.json`
+- `schemas/flock.schema.json`
+- `schemas/skills.schema.json`
 
-## `_meta.toml`
+## Model Overview
 
-Each skill folder must contain `_meta.toml` at the bundle root.
+### `realm.json`
 
-### Required shape
+`realm.json` describes the owner namespace of one realm.
 
-```toml
-schema_version = 2
+Typical responsibilities:
 
-[package]
-kind = "skill"
-slug = "echo-test"
-name = "Echo Test"
-description = "Simple echo skill for testing skill loading and execution."
-version = "1.0.0"
-license = "Apache-2.0"
+- namespace identity
+- maintainers and contact points
+- branding and discovery metadata
+- default publishing policy for child flocks
 
-[author]
-name = "_"
+### `flock.json`
 
-[source]
-kind = "bundle"
-subdir = "."
+`flock.json` describes one curated skill collection under a realm.
+
+Typical responsibilities:
+
+- flock identity and version
+- lifecycle and visibility
+- canonical source repository
+- compatibility range
+- where to find the `skills.json` index
+
+### `skills.json`
+
+`skills.json` is the per-flock skill index.
+
+Typical responsibilities:
+
+- enumerate skills in the flock
+- expose display metadata for list UIs
+- define the canonical source for each skill
+- provide optional runtime and compatibility hints
+
+## File Relationship
+
+```text
+realms/{realm-id}/realm.json
+  └── flocks/{flock-slug}/flock.json
+        └── skills.json
+              └── items[]
 ```
 
-### Sections
+The recommended identifier relationship is:
 
-#### `schema_version`
+- `realm.json.id == {realm-id}`
+- `flock.json.realm_id == realm.json.id`
+- `flock.json.slug == {flock-slug}`
+- `skills.json.realm_id == realm.json.id`
+- `skills.json.flock_slug == flock.json.slug`
+- `skills.json.items[].id == {realm-id}/{flock-slug}/{skill-slug}`
 
-- Required.
-- Current value: `2`.
+## `realm.json`
 
-#### `[package]`
+### Required fields
 
-- Required.
-- `kind`: currently `skill`.
-- `slug`: canonical machine name. Lowercase letters, digits, and `-` only.
-- `name`: display name.
-- `description`: short summary used for registry display and search.
-- `version`: semver string such as `1.0.0`.
-- `license`: SPDX-style license identifier or another explicit license label.
-- `icon`: optional short icon or emoji used by clients for richer presentation.
+| Field | Type | Notes |
+| --- | --- | --- |
+| `schema_version` | integer | Must be `1`. |
+| `id` | string | Realm identifier. Allows `_` or a lowercase slug. |
+| `name` | string | Display name. |
+| `description` | string | Human-readable namespace description. |
+| `website` | string | Canonical website URL. |
+| `maintainers` | array | At least one maintainer. |
 
-#### `[author]`
+### Recommended fields
 
-- Required.
-- `name`: human-readable author or maintainer label for the bundle content.
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `tagline` | string | Short one-line summary for directory UIs. |
+| `visibility` | string | `public`, `unlisted`, or `private`. |
+| `verified` | boolean | Whether the registry operator verified ownership. |
+| `branding` | object | Icon, accent color, optional banner/logo URLs. |
+| `discovery` | object | Categories, keywords, and tags. |
+| `contacts` | object | Public, security, and discussion contacts. |
+| `defaults` | object | Default license, visibility, and compatibility guidance. |
+| `policies` | object | Submission, security, and code-of-conduct URLs. |
+| `links` | object | Docs, homepage, issue tracker, and related URLs. |
 
-#### `[discovery]`
+## `flock.json`
 
-- Optional.
-- `keywords`: free-form search keywords.
-- `categories`: higher-level grouping values.
+### Required fields
 
-#### `[source]`
+| Field | Type | Notes |
+| --- | --- | --- |
+| `schema_version` | integer | Must be `1`. |
+| `realm_id` | string | Parent realm identifier. |
+| `slug` | string | Flock slug, lowercase with `-` or `_`. |
+| `name` | string | Display name. |
+| `description` | string | Short collection summary. |
+| `version` | string | Semver release such as `1.2.0`. |
+| `status` | string | `draft`, `active`, `experimental`, `deprecated`, or `archived`. |
+| `license` | string | SPDX-style license string or explicit label. |
+| `maintainers` | array | Maintainer list for the flock. |
+| `source` | object | Canonical origin of the flock metadata/content. |
+| `index` | object | Must include `skills_path`. |
 
-- Required.
-- `kind`: `bundle` or `git`.
-- `subdir`: relative path to the skill root inside the source tree.
-  - Use `"."` when the skill root is the source root.
-  - Use forward slashes.
-  - Must be relative.
+### Recommended fields
 
-For bundled skills stored directly in this registry:
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `visibility` | string | Discovery visibility. |
+| `categories` | array | Higher-level discovery grouping. |
+| `keywords` | array | Search keywords. |
+| `branding` | object | Flock-specific icon or color overrides. |
+| `compatibility` | object | Supported Savfox versions and platforms. |
+| `featured_skills` | array | Ordered list of promoted skill slugs. |
+| `links` | object | Homepage, repository, docs, issues, etc. |
 
-```toml
-[source]
-kind = "bundle"
-subdir = "."
+### `source` variants
+
+`source.kind` supports two modes:
+
+1. `git`
+   Use when the flock is sourced from a Git repository.
+
+```json
+{
+  "kind": "git",
+  "url": "https://github.com/example/flock-name.git",
+  "ref": {
+    "type": "branch",
+    "value": "main"
+  },
+  "subdir": "."
+}
 ```
 
-For git-backed skills:
+2. `registry`
+   Use when the content is bundled directly in this repository or another checked-in registry tree.
 
-```toml
-[source]
-kind = "git"
-subdir = "packages/skills/echo-test"
-
-[source.git]
-url = "https://github.com/acme/agent-monorepo.git"
-
-[source.git.ref]
-kind = "tag"
-value = "skills/echo-test/v1.4.0"
-```
-
-#### Git source rules
-
-When `source.kind = "git"`:
-
-- `[source.git]` is required.
-- `url` is required.
-- `[source.git.ref]` is required.
-- `source.git.ref.kind` must be one of:
-  - `branch`
-  - `tag`
-  - `commit`
-- `source.git.ref.value` is the branch name, tag name, or commit hash.
-
-Example with a branch:
-
-```toml
-[source]
-kind = "git"
-subdir = "skills/sys-info"
-
-[source.git]
-url = "https://github.com/acme/platform-tools.git"
-
-[source.git.ref]
-kind = "branch"
-value = "main"
-```
-
-Example with a commit hash:
-
-```toml
-[source]
-kind = "git"
-subdir = "skills/json-transform"
-
-[source.git]
-url = "https://github.com/acme/data-skills.git"
-
-[source.git.ref]
-kind = "commit"
-value = "6c4d6fc7c9e9385cb6ab8e4dc1e9587f9cbd7e4f"
-```
-
-#### `[runtime]`
-
-- Optional.
-- `bins`: executables expected on `PATH`.
-- `env`: environment variables the skill expects.
-
-Installation hints can be declared with `[[runtime.install]]`:
-
-```toml
-[runtime]
-bins = ["jq"]
-env = []
-
-[[runtime.install]]
-id = "brew"
-kind = "brew"
-package = "jq"
-bins = ["jq"]
-label = "Homebrew"
-```
-
-Each install record supports:
-
-- `id`: optional stable identifier inside the metadata file.
-- `kind`: installer type such as `brew`, `apt`, `choco`, `pip`, `cargo`, or `custom`.
-- `package`: optional package/formula name.
-- `command`: optional explicit install command for custom installers.
-- `bins`: optional binaries satisfied by this install method.
-- `label`: optional display label.
-
-At least one of `package` or `command` should be provided for each install record.
-
-#### `[links]`
-
-- Optional.
-- Free-form string map for repository, homepage, docs, issues, examples, etc.
-
-Example:
-
-```toml
-[links]
-repository = "https://github.com/savfox-ai/registry"
-documentation = "https://example.com/skills/echo-test"
-```
-
-## Bundled Skill Example
-
-```toml
-schema_version = 2
-
-[package]
-kind = "skill"
-slug = "echo-test"
-name = "Echo Test"
-description = "Simple echo skill for testing skill loading and execution."
-version = "1.0.0"
-license = "Apache-2.0"
-icon = "🔔"
-
-[author]
-name = "_"
-
-[discovery]
-keywords = ["test", "echo", "debug", "hello-world"]
-categories = ["testing"]
-
-[source]
-kind = "bundle"
-subdir = "."
-
-[runtime]
-bins = []
-env = []
-
-[links]
-repository = "https://github.com/savfox-ai/registry"
+```json
+{
+  "kind": "registry",
+  "path": "realms/_/flocks/flock_name"
+}
 ```
 
 ## `skills.json`
 
-The registry index is a JSON object:
+### Root object
 
-```json
-{
-  "schema_version": 2,
-  "items": [
-    {
-      "id": "_/echo-test",
-      "namespace": "_",
-      "slug": "echo-test",
-      "name": "Echo Test",
-      "description": "Simple echo skill for testing skill loading and execution.",
-      "version": "1.0.0",
-      "registry_path": "skills/_/echo-test",
-      "metadata_path": "skills/_/echo-test/_meta.toml",
-      "source": {
-        "kind": "bundle",
-        "subdir": "."
-      }
-    }
-  ]
-}
-```
+| Field | Type | Notes |
+| --- | --- | --- |
+| `schema_version` | integer | Must be `1`. |
+| `realm_id` | string | Parent realm identifier. |
+| `flock_slug` | string | Parent flock slug. |
+| `generated_at` | string | Optional RFC 3339 timestamp. |
+| `items` | array | Skill records. Can be empty for a new flock. |
 
-### Index field meanings
+### Skill item required fields
 
-- `schema_version`: current index schema version.
-- `items`: registry entries.
-- `id`: `{namespace}/{slug}`.
-- `namespace`: owner or grouping directory in this registry.
-- `slug`: canonical package slug.
-- `name`: display name.
-- `description`: short summary for list UIs.
-- `version`: latest published metadata version for that entry.
-- `registry_path`: folder path inside this repository.
-- `metadata_path`: `_meta.toml` location.
-- `source`: source summary copied from `_meta.toml`.
+| Field | Type | Notes |
+| --- | --- | --- |
+| `id` | string | Fully qualified ID: `{realm}/{flock}/{skill}`. |
+| `slug` | string | Skill slug. |
+| `name` | string | Display name. |
+| `summary` | string | Short list view description. |
+| `version` | string | Semver release. |
+| `status` | string | Lifecycle status. |
+| `license` | string | SPDX-style or explicit license. |
+| `source` | object | Canonical source locator for the skill. |
 
-For git-backed entries, `source` includes the git URL, ref kind/value, and `subdir`.
+### Skill item recommended fields
+
+| Field | Type | Purpose |
+| --- | --- | --- |
+| `description` | string | Longer explanation than `summary`. |
+| `categories` | array | Discovery grouping. |
+| `keywords` | array | Search terms. |
+| `maintainers` | array | Skill-specific maintainers. |
+| `entry` | object | Entry file format and relative path. |
+| `compatibility` | object | Supported Savfox versions and platforms. |
+| `runtime` | object | Required binaries, env vars, network/sandbox hints. |
+| `links` | object | Homepage, repository, docs, issues, examples. |
+
+## Shared Conventions
+
+### Slugs and identifiers
+
+- Realm IDs allow `_` for the default/example realm.
+- Flock and skill slugs should use lowercase letters, digits, `-`, or `_`.
+
+### Paths
+
+- Use forward slashes in relative paths.
+- Paths must stay inside the logical source root.
+- Avoid absolute paths and parent traversal (`..`).
+
+### Source references
+
+- `git` sources must include a URL, ref type/value, and `subdir`.
+- `registry` sources must include a relative `path`.
+- `entry.path` is interpreted relative to `source.subdir` for `git`, and relative to `source.path` for `registry`.
+
+### Compatibility
+
+`compatibility` is intentionally lightweight:
+
+- `savfox`: semver range or other supported version expression
+- `platforms`: `any`, `windows`, `linux`, `macos`, or `web`
+- `architectures`: `any`, `x64`, or `arm64`
+
+### Runtime hints
+
+`runtime` is intended for client-side warnings and preflight checks.
+
+Supported keys:
+
+- `bins`
+- `env`
+- `network`
+- `sandbox`
+- `memory_mb`
 
 ## Validation Rules
 
-Clients and servers should reject metadata when any of the following are true:
+Clients or CI should reject metadata when:
 
-- `schema_version` is not `2`
-- `package.slug` is invalid
-- `package.version` is not valid semver
+- `schema_version` is not `1`
 - required strings are empty
-- `source.subdir` is absolute or escapes upward with `..`
-- `source.kind = "git"` but git URL/ref is missing
-- `source.kind != "git"` but git-specific fields are present in a contradictory way
+- a slug or fully qualified ID is malformed
+- `version` is not valid semver
+- a URL or email field is invalid
+- a relative path is absolute or escapes upward
+- `source.kind = "git"` but URL, ref, or `subdir` is missing
+- `skills.json.realm_id` or `skills.json.flock_slug` conflicts with its parent directory
 
-## Compatibility Guidance
+## Optional Future Expansion
 
-- New publishers should treat `_meta.toml` as the canonical source for slug, name, version, and description.
-- Registry clients should prefer `_meta.toml` over inferred values from folder names.
-- Servers can still keep a fallback path for older bundles that only contain markdown frontmatter, but new submissions should ship `_meta.toml`.
+The current format does not require local skill bundle folders, but the structure is compatible with a future convention such as:
+
+```text
+realms/{realm-id}/flocks/{flock-slug}/skills/{skill-slug}/
+  SKILL.md
+  assets/
+  templates/
+  scripts/
+```
+
+If that convention is adopted later, `skills.json.items[].source.kind = "registry"` can point to the bundle directory without changing the rest of the model.
