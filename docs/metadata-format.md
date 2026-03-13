@@ -116,6 +116,7 @@ The recommended identifier relationship is:
 | `compatibility` | object | Supported Savfox versions and platforms. |
 | `featured_skills` | array | Ordered list of promoted skill slugs. |
 | `links` | object | Homepage, repository, docs, issues, etc. |
+| `verification` | object | Security verification status and scan results. |
 
 ### `source` variants
 
@@ -183,6 +184,55 @@ The recommended identifier relationship is:
 | `compatibility` | object | Supported Savfox versions and platforms. |
 | `runtime` | object | Required binaries, env vars, network/sandbox hints. |
 | `links` | object | Homepage, repository, docs, issues, examples. |
+| `verification` | object | Security verification status and scan results. |
+
+## Verification
+
+The `verification` object tracks security review status for flocks and individual skills. When a user submits a git URL, the server clones the repository, scans for skills, groups them into flocks, and marks each as `unverified`. Verification proceeds through automated scan modules and optional manual review.
+
+### Verification fields
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `status` | string | yes | Current verification state (see below). |
+| `scans` | array | no | Per-module scan results. |
+| `verified_at` | string | no | RFC 3339 timestamp of last verification. |
+| `verified_by` | string | no | `auto-scan` or `manual-review`. |
+| `reviewer_id` | string | no | ID of the human reviewer, if applicable. |
+| `notes` | string | no | Free-text notes from the reviewer or scan pipeline. |
+
+### Verification status values
+
+| Status | Meaning |
+| --- | --- |
+| `unverified` | Initial state — no scans have run. |
+| `pending` | Scans are queued or in progress. |
+| `passed` | All automated scans passed. |
+| `failed` | One or more scans failed. |
+| `manual-approved` | A human reviewer approved the content. |
+| `manual-rejected` | A human reviewer rejected the content. |
+
+### Typical state transitions
+
+```text
+unverified → pending → passed
+                     → failed → manual-approved
+                              → manual-rejected
+```
+
+A flock or skill starts as `unverified`. When scan modules are queued, it transitions to `pending`. After all scans finish, it becomes `passed` or `failed`. A `failed` result can be escalated for manual review, resulting in `manual-approved` or `manual-rejected`.
+
+### Scan result fields
+
+Each entry in the `scans` array describes one scan module's output.
+
+| Field | Type | Required | Notes |
+| --- | --- | --- | --- |
+| `module` | string | yes | Lowercase module ID (e.g. `license-check`, `secret-scan`). |
+| `status` | string | yes | `queued`, `running`, `passed`, `failed`, `skipped`, or `error`. |
+| `severity` | string | no | `none`, `low`, `medium`, `high`, or `critical`. |
+| `message` | string | no | Human-readable detail about the result. |
+| `scanned_at` | string | no | RFC 3339 timestamp when the scan completed. |
 
 ## Shared Conventions
 

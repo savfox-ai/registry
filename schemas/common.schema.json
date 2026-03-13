@@ -329,6 +329,91 @@
         "path"
       ],
       "additionalProperties": false
+    },
+    "scanResult": {
+      "type": "object",
+      "properties": {
+        "module": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "queued",
+            "running",
+            "passed",
+            "failed",
+            "skipped",
+            "error"
+          ]
+        },
+        "severity": {
+          "type": "string",
+          "enum": [
+            "none",
+            "low",
+            "medium",
+            "high",
+            "critical"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "scanned_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": [
+        "module",
+        "status"
+      ],
+      "additionalProperties": false
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": [
+            "unverified",
+            "pending",
+            "passed",
+            "failed",
+            "manual-approved",
+            "manual-rejected"
+          ]
+        },
+        "scans": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scanResult"
+          }
+        },
+        "verified_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "verified_by": {
+          "type": "string",
+          "enum": [
+            "auto-scan",
+            "manual-review"
+          ]
+        },
+        "reviewer_id": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "status"
+      ],
+      "additionalProperties": false
     }
   }
 }

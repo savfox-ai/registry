@@ -76,6 +76,9 @@
     },
     "links": {
       "$ref": "common.schema.json#/$defs/links"
+    },
+    "verification": {
+      "$ref": "common.schema.json#/$defs/verification"
     }
   },
   "required": [

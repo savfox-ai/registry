@@ -65,6 +65,34 @@
         "homepage": "https://example.com/skills/python",
         "docs": "https://example.com/skills/python/docs",
         "repository": "https://github.com/example/python-skill"
+      },
+      "verification": {
+        "status": "manual-approved",
+        "scans": [
+          {
+            "module": "license-check",
+            "status": "passed",
+            "severity": "none",
+            "scanned_at": "2026-03-12T09:30:00Z"
+          },
+          {
+            "module": "secret-scan",
+            "status": "passed",
+            "severity": "none",
+            "scanned_at": "2026-03-12T09:31:00Z"
+          },
+          {
+            "module": "code-injection",
+            "status": "failed",
+            "severity": "low",
+            "message": "Flagged for manual review: dynamic import pattern detected.",
+            "scanned_at": "2026-03-12T09:32:00Z"
+          }
+        ],
+        "verified_at": "2026-03-12T11:00:00Z",
+        "verified_by": "manual-review",
+        "reviewer_id": "registry-team",
+        "notes": "Dynamic import pattern reviewed and approved — used for optional dependency loading only."
       }
     }
   ]

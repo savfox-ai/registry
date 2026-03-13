@@ -52,5 +52,24 @@
     "homepage": "https://example.com/flocks/flock-name",
     "repository": "https://github.com/example/flock-name",
     "issues": "https://github.com/example/flock-name/issues"
+  },
+  "verification": {
+    "status": "passed",
+    "scans": [
+      {
+        "module": "license-check",
+        "status": "passed",
+        "severity": "none",
+        "scanned_at": "2026-03-12T10:00:00Z"
+      },
+      {
+        "module": "secret-scan",
+        "status": "passed",
+        "severity": "none",
+        "scanned_at": "2026-03-12T10:01:00Z"
+      }
+    ],
+    "verified_at": "2026-03-12T10:05:00Z",
+    "verified_by": "auto-scan"
   }
 }
